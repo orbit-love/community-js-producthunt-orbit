@@ -1,14 +1,12 @@
-# PLATFORM to Orbit Workspace
+# Product Hunt to Orbit Workspace
 
-<!-- Update repo name -->
-![Build Status](https://github.com/orbit-love/repo-name/workflows/CI/badge.svg)
-<!-- Generator at https://badge.fury.io/ -->
-[![Gem Version](https://badge.fury.io/rb/dev_orbit.svg)](https://badge.fury.io/rb/dev_orbit)
+![Build Status](https://github.com/orbit-love/community-js-producthunt-orbit/workflows/CI/badge.svg)
+[![npm version](https://badge.fury.io/js/%40orbit-love%2Fproducthunt.svg)](https://badge.fury.io/js/%40orbit-love%2Fproducthunt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
 
-One-line description about what this is and what language it is in.
+This is a JavaScript package that can be used to integrate new Product Hunt votes from a specified subreddit into your organization's Orbit workspace.
 
-<!-- Screenshot(s) of activity in timeline from this integration -->
+![](docs/activity.png)
 
 |<p align="left">:sparkles:</p> This is a *community project*. The Orbit team does its best to maintain it and keep it up to date with any recent API changes.<br/><br/>We welcome community contributions to make sure that it stays current. <p align="right">:sparkles:</p>|
 |-----------------------------------------|
@@ -17,9 +15,9 @@ One-line description about what this is and what language it is in.
 
 ## First Time Setup
 
-<!-- If this section is short, delete docs/setup.md and write the guide under this heading -->
-
-To set up this integration you will need some details from PLATFORM. To get these details please follow the [First Time Setup guide](docs/setup.md).
+1. Create a new [Product Hunt API Application](https://www.producthunt.com/v2/oauth/applications)
+    1. Redirect URI can be any web address
+    2. Take note of your API Key and API Secret
 
 ## Application Credentials
 
@@ -27,7 +25,8 @@ The application requires the following environment variables:
 
 | Variable | Description | More Info
 |---|---|--|
-| `NAME` | Brief description | Where to get it 
+| `PRODUCT_HUNT_API_KEY` | API Key for your Product Hunt Application | Follow the guide above
+| `PRODUCT_HUNT_API_SECRET` | API Secret for your Product Hunt Application | Follow the guide above
 | `ORBIT_API_KEY` | API key for Orbit | Found in `Account Settings` in your Orbit workspace
 | `ORBIT_WORKSPACE_ID` | ID for your Orbit workspace | Last part of the Orbit workspace URL, i.e. `https://app.orbit.love/my-workspace`, the ID is `my-workspace`
 
@@ -36,32 +35,38 @@ The application requires the following environment variables:
 Install the package with the following command
 
 ```
-$ installation command
+$ npm install @orbit-love/producthunt
 ```
 
-Use the package with the following snippet.
+The standard initialization of the library requires the following signature:
 
-```
-#
-```
-
-<!-- Make sure all variants and standalone methods are explained. -->
-
-## CLI Usage
-
-To use this package you DO/DO NOT need to install it.
-
-```
-#
+```js
+const OrbitProductHunt = require('@orbit-love/producthunt')
+const orbitProductHunt = new OrbitProductHunt('orbitWorkspaceId', 'orbitApiKey', 'productHuntApiKey', 'productHuntApiSecret')
 ```
 
-<!-- Explain any flags/config options -->
+If you have the following environment variables set: `ORBIT_WORKSPACE_ID`, `ORBIT_API_KEY`, `PRODUCT_HUNT_API_KEY`, and `PRODUCT_HUNT_API_SECRET` then you can initialize the client as follows:
 
-## GitHub Actions Automation Setup
+```js
+const OrbitProductHunt = require('@orbit-love/producthunt')
+const orbitProductHunt = new OrbitProductHunt()
+```
 
-⚡ You can set up this integration in a matter of minutes using our GitHub Actions template. It will run regularly to add new activities to your Orbit workspace. All you need is a GitHub account.
+### Get Product IDs Made By A User
 
-[See our guide for setting up this automation](#)
+```js
+const products = await orbitProductHunt.getProducts('_phzn')
+console.log(products)
+```
+
+### Add New Votes On Product
+
+```js
+const votes = await orbitProductHunt.getVotes(productId)
+const prepared = await orbitProductHunt.prepareVotes(votes, 24) // 24 is the number of previous hours to get votes from
+const added = await orbitProductHunt.addActivities(prepared)
+console.log(added) // "Added n activities to your Orbit workspace"
+```
 
 ## Contributing
 

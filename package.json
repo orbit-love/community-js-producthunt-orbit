@@ -1,0 +1,38 @@
+{
+  "name": "@orbit-love/producthunt",
+  "version": "0.0.1",
+  "description": "Integrate Product Hunt votes into Orbit workspaces",
+  "main": "./src/index.js",
+  "bin": "./src/bin.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbit-love/community-js-producthunt-orbit.git"
+  },
+  "keywords": [
+    "orbit",
+    "integration",
+    "votes",
+    "product",
+    "hunt",
+    "producthunt"
+  ],
+  "author": "Kevin Lewis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orbit-love/community-js-producthunt-orbit/issues"
+  },
+  "homepage": "https://github.com/orbit-love/community-js-producthunt-orbit#readme",
+  "devDependencies": {
+    "jest": "^27.0.1"
+  },
+  "dependencies": {
+    "@orbit-love/activities": "^0.1.1",
+    "moment": "^2.29.1",
+    "producthunt": "^0.3.0",
+    "yargs": "^17.0.1"
+  }
+}
