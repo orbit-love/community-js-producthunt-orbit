@@ -68,6 +68,21 @@ const added = await orbitProductHunt.addActivities(prepared)
 console.log(added) // "Added n activities to your Orbit workspace"
 ```
 
+## CLI Usage
+
+To use this package you do not need to install it, but will need Node.js installed on your machine.
+
+```
+npx @orbit-love/producthunt --products --user=username
+npx @orbit-love/producthunt --votes --id=projectid
+```
+
+By default this will get the last 1 hours worth of votes, but this can be explicitly overridden:
+
+```
+npx @orbit-love/producthunt --votes --id=projectid --hours=12
+```
+
 ## Contributing
 
 We 💜 contributions from everyone! Check out the [Contributing Guidelines](.github/CONTRIBUTING.md) for more information.
