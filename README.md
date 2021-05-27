@@ -83,6 +83,12 @@ By default this will get the last 1 hours worth of votes, but this can be explic
 npx @orbit-love/producthunt --votes --id=projectid --hours=12
 ```
 
+## GitHub Actions Automation Setup
+
+⚡ You can set up this integration in a matter of minutes using our GitHub Actions template. It will run regularly to add new activities to your Orbit workspace. All you need is a GitHub account.
+
+[See our guide for setting up this automation](https://github.com/orbit-love/github-actions-templates/blob/main/ProductHunt)
+
 ## Contributing
 
 We 💜 contributions from everyone! Check out the [Contributing Guidelines](.github/CONTRIBUTING.md) for more information.
