@@ -1,6 +1,6 @@
 {
   "name": "@orbit-love/producthunt",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Integrate Product Hunt votes into Orbit workspaces",
   "main": "./src/index.js",
   "bin": "./src/bin.js",
@@ -18,7 +18,8 @@
     "votes",
     "product",
     "hunt",
-    "producthunt"
+    "producthunt",
+    "comments"
   ],
   "author": "Kevin Lewis",
   "license": "MIT",

@@ -104,28 +104,89 @@ class OrbitProductHunt {
         })
     }
 
-    addActivities(activities) {
+    getCommentsPage(post_id, older) {
         return new Promise((resolve, reject) => {
-            try {
-                const calls = activities.map(activity => this.orbit.createActivity(activity))
-                Promise.allSettled(calls).then(results => {
-                    let stats = { added: 0, duplicates: 0 }
-                    for(let result of results) {
-                        if(result.status != 'fulfilled') {
-                            if(result.reason && result.reason.errors && result.reason.errors.key) {
-                                stats.duplicates++
-                            } else {
-                                throw new Error(result.reason.errors)
-                            }
-                        } else {
-                            stats.added++
-                        }
-                    }
+            this.productHunt.comments.index({ post_id, params: { older, order: 'desc' } }, (err, res) => {
+                if(err) reject(err)
+                const body = JSON.parse(res.body)
+                let comments = body.comments
+                let children = []
+                for(let comment of comments) {
+                    children = [...children, ...comment.child_comments]
+                }
+                resolve({ comments, children })
+            })
+        })
+    }
 
-                    let reply = `Added ${stats.added} activities to your Orbit workspace.`
-                    if(stats.duplicates) reply += ` Your activity list had ${stats.duplicates} duplicates which were not imported`
-                    resolve(reply)
-                })
+    getComments(id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const initialPage = await this.getCommentsPage(id)
+                let comments = [...initialPage.comments]
+                let children = [...initialPage.children]
+                let isMore = true
+                while(isMore) {
+                    const latestCommentId = comments[comments.length-1].id
+                    const page = await this.getCommentsPage(id, latestCommentId)
+                    if(page.comments.length > 0) {
+                        comments = [...comments, ...page.comments]
+                        children = [...children, ...page.children]
+                    } else {
+                        isMore = false
+                    }
+                }
+                resolve([...comments, ...children])
+            } catch(error) {
+                reject(error)
+            }
+        })
+    }
+
+    prepareComments(list, hours = 1) {
+        return new Promise(resolve => {
+            const filtered = list.filter(item => {
+                return moment().diff(moment(item.created_at), 'hours', true) < hours
+            })
+            const prepared = filtered.map(item => {
+                return {
+                    activity: {
+                        title: `Commented on Product Hunt`,
+                        description: item.body,
+                        tags: ['channel:producthunt'],
+                        activity_type: 'producthunt:comment',
+                        key: `producthunt-comment-${item.id}`,
+                        occurred_at: new Date(item.created_at).toISOString(),
+                        link: item.url,
+                        link_text: 'View on Product Hunt',
+                        member: { twitter: item.user.twitter_username }
+                    },
+                    identity: {
+                        source: 'Product Hunt',
+                        source_host: 'producthunt.com',
+                        username: item.user.username,
+                        url: item.user.profile_url,
+                        uid: item.user.id
+                    }
+                }
+            })
+            resolve(prepared)
+        })
+    }
+
+    addActivities(activities) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let stats = { added: 0, duplicates: 0, errors: [] }
+                for(let activity of activities) {
+                    await this.orbit.createActivity(activity)
+                        .then(() => { stats.added++ })
+                        .catch(err => {
+                            if(err.errors.key) stats.duplicates++
+                            else { errors.push(err) }
+                        })
+                }
+                resolve(stats)
             } catch(error) {
                 reject(error)
             }

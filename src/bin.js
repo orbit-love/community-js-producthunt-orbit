@@ -11,9 +11,10 @@ async function main() {
 
     if(!hasEnvVars || !(hasVoteReqs || hasProductReqs) || hasBothReqs) {
         return console.error(`
-        You must run this command as follows:
+        You may only run any of the following commands:
         npx @orbit-love/producthunt --products --user=username
         npx @orbit-love/producthunt --votes --id=projectid --hours=12
+        npx @orbit-love/producthunt --comments --id=projectid --hours=12
 
         If --hours is not provided it will default to 1.
 
@@ -32,6 +33,13 @@ async function main() {
         const votes = await orbitProductHunt.getVotes(args.id)
         const preparedVoteActivities = await orbitProductHunt.prepareVotes(votes, args.hours)
         const result = await orbitProductHunt.addActivities(preparedVoteActivities)
+        console.log(result)
+    }
+
+    if(args.comments) {
+        const comments = await orbitProductHunt.getComments(args.id)
+        const preparedCommentActivities = await orbitProductHunt.prepareComments(comments, args.hours)
+        const result = await orbitProductHunt.addActivities(preparedCommentActivities)
         console.log(result)
     }
 }
