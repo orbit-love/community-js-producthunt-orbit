@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40orbit-love%2Fproducthunt.svg)](https://badge.fury.io/js/%40orbit-love%2Fproducthunt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
 
-This is a JavaScript package that can be used to integrate new Product Hunt votes from a specified subreddit into your organization's Orbit workspace.
+This is a JavaScript package that can be used to integrate new Product Hunt votes and comments into your organization's Orbit workspace.
 
 ![](docs/activity.png)
 ![](docs/activity-comment.png)
@@ -65,17 +65,33 @@ console.log(products)
 ```js
 const votes = await orbitProductHunt.getVotes(productId)
 const prepared = await orbitProductHunt.prepareVotes(votes, 24) // 24 is the number of previous hours to get votes from
-const added = await orbitProductHunt.addActivities(prepared)
-console.log(added) // "Added n activities to your Orbit workspace"
+const outcome = await orbitProductHunt.addActivities(prepared)
+console.log(outcome)
 ```
+
+### Add New Comments On Product
+
+```js
+const votes = await orbitProductHunt.getComments(productId)
+const prepared = await orbitProductHunt.prepareComments(votes, 24) // 24 is the number of previous hours to get votes from
+const outcome = await orbitProductHunt.addActivities(prepared)
+console.log(outcome)
+```
+
 
 ## CLI Usage
 
 To use this package you do not need to install it, but will need Node.js installed on your machine.
 
-```
+```bash
 npx @orbit-love/producthunt --products --user=username
+
+# Add new votes or comments
 npx @orbit-love/producthunt --votes --id=projectid
+npx @orbit-love/producthunt --comments --id=projectid
+
+# Add new votes and comments
+npx @orbit-love/producthunt --votes --comments --id=projectid
 ```
 
 By default this will get the last 1 hours worth of votes, but this can be explicitly overridden:
