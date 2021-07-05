@@ -1,6 +1,6 @@
 {
   "name": "@orbit-love/producthunt",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Integrate Product Hunt votes into Orbit workspaces",
   "main": "./src/index.js",
   "bin": "./src/bin.js",
