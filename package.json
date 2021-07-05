@@ -28,7 +28,11 @@
   },
   "homepage": "https://github.com/orbit-love/community-js-producthunt-orbit#readme",
   "devDependencies": {
-    "jest": "^27.0.1"
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "@orbit-love/activities": "^0.1.1",
