@@ -102,8 +102,8 @@ class OrbitProductHunt {
       return {
         activity: {
           title: `Upvoted on Product Hunt`,
-          tags: ['channel:producthunt'],
-          activity_type: 'producthunt:vote',
+          tags: ['channel:producthunt', `product:${item.post_id}`, `product_url:${item.post_url}`],
+          activity_type_key: 'producthunt:vote',
           key: `producthunt-vote-${item.id}`,
           occurred_at: new Date(item.created_at).toISOString(),
           member: { twitter: item.user.twitter_username }
@@ -169,8 +169,8 @@ class OrbitProductHunt {
         activity: {
           title: `Commented on Product Hunt`,
           description: item.body,
-          tags: ['channel:producthunt'],
-          activity_type: 'producthunt:comment',
+          tags: ['channel:producthunt', `product:${item.post_id}`, `product_url:${item.post_url}`],
+          activity_type_key: 'producthunt:comment',
           key: `producthunt-comment-${item.id}`,
           occurred_at: new Date(item.created_at).toISOString(),
           link: item.url,
