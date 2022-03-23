@@ -102,7 +102,10 @@ class OrbitProductHunt {
       return {
         activity: {
           title: `Upvoted on Product Hunt`,
-          tags: ['channel:producthunt', `product:${item.post_id}`, `product_url:${item.post_url}`],
+          //tags: ['channel:producthunt', `product_id:${item.post_id}`],
+          properties: {
+            product_id: `${item.post_id}`,
+          },
           activity_type_key: 'producthunt:vote',
           key: `producthunt-vote-${item.id}`,
           occurred_at: new Date(item.created_at).toISOString(),
@@ -169,7 +172,11 @@ class OrbitProductHunt {
         activity: {
           title: `Commented on Product Hunt`,
           description: item.body,
-          tags: ['channel:producthunt', `product:${item.post_id}`, `product_url:${item.post_url}`],
+          //tags: ['channel:producthunt', `product:${item.post_id}`, `product_url:${item.url}`],
+          properties: {
+            product: `${item.post_id}`,
+            product_url: `${item.url.split('?')[0]}`
+          },
           activity_type_key: 'producthunt:comment',
           key: `producthunt-comment-${item.id}`,
           occurred_at: new Date(item.created_at).toISOString(),
