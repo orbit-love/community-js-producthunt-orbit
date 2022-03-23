@@ -102,7 +102,6 @@ class OrbitProductHunt {
       return {
         activity: {
           title: `Upvoted on Product Hunt`,
-          //tags: ['channel:producthunt', `product_id:${item.post_id}`],
           properties: {
             product_id: `${item.post_id}`,
           },
@@ -172,7 +171,6 @@ class OrbitProductHunt {
         activity: {
           title: `Commented on Product Hunt`,
           description: item.body,
-          //tags: ['channel:producthunt', `product:${item.post_id}`, `product_url:${item.url}`],
           properties: {
             product: `${item.post_id}`,
             product_url: `${item.url.split('?')[0]}`
