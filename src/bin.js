@@ -6,10 +6,11 @@ const args = require('yargs').argv
 async function main() {
     const hasEnvVars = process.env.ORBIT_WORKSPACE_ID && process.env.ORBIT_API_KEY && process.env.PRODUCT_HUNT_API_KEY && process.env.PRODUCT_HUNT_API_SECRET
     const hasVoteReqs = args.votes && args.id
+    const hasCommentReqs = args.comments && args.id
     const hasProductReqs = args.products && args.user
     const hasBothReqs = args.votes && args.products
 
-    if(!hasEnvVars || !(hasVoteReqs || hasProductReqs) || hasBothReqs) {
+    if(!hasEnvVars || !(hasVoteReqs || hasProductReqs || hasCommentReqs) || hasBothReqs) {
         return console.error(`
         You may only run any of the following commands:
         npx @orbit-love/producthunt --products --user=username
