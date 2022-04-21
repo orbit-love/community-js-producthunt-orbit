@@ -15,10 +15,10 @@ This is a JavaScript package that can be used to integrate new Product Hunt vote
 ![There are three ways to use this integration. Install package - build and run your own applications. Run the CLI - run on-demand directly from your terminal. Schedule an automation with GitHub - get started in minutes - no coding required](docs/ways-to-use.png)
 
 ## First Time Setup
-
-1. Create a new [Product Hunt API Application](https://www.producthunt.com/v2/oauth/applications)
-    1. Redirect URI can be any web address
-    2. Take note of your API Key and API Secret
+1. Log in to Product Hunt
+2. Create a new [Product Hunt API Application](https://www.producthunt.com/v2/oauth/applications)
+  1. Redirect URI can be any web address
+  2. Take note of your API Key and API Secret
 
 ## Application Credentials
 
